@@ -1,0 +1,20 @@
+---
+- name: Install and Start Apache on EC2
+  hosts: web_servers
+  become: yes  # This runs the commands as 'sudo' (root)
+  tasks:
+    - name: Install Apache (httpd)
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start the Apache service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Create a basic landing page
+      copy:
+        content: "<h1>Success! Apache is running on Yousef's EC2</h1>"
+        dest: /var/www/html/index.html
